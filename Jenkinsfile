@@ -3,9 +3,10 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                // Build code using Maven
+                // Use the configured Maven installation
                 sh 'mvn clean package'
             }
         }
+        // Add other stages as per your pipeline requirements
     }
 }
