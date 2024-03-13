@@ -22,13 +22,13 @@ pipeline {
             // Send email notification on pipeline success
             emailext subject: "Pipeline Success",
                       body: "The pipeline completed successfully.",
-                      to: "your_email@example.com"
+                      to: "moksh4814.be22@chitkara.edu.in"
         }
         failure {
             // Send email notification on pipeline failure
             emailext subject: "Pipeline Failure",
                       body: "The pipeline failed.",
-                      to: "your_email@example.com"
+                      to: "moksh4814.be22@chitkara.edu.in"
         }
     }
 }
