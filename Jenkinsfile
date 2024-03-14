@@ -12,7 +12,7 @@ pipeline {
             steps {
                 echo 'Dependency installation...'
                 echo 'Building the application...'
-                git branch: 'main', url: 'https://github.com/mayank1818/task-10.1p.git'
+                git branch: 'main', url: 'https://github.com/Moksh1201/HTML/tree/main/10.1p'
             }
         }
         stage('Test') {
@@ -68,7 +68,7 @@ pipeline {
         stage('Approval') {
             steps {
                 script {
-                    sleep 10 // Simulate manual approval for 10 seconds
+                    sleep 10 
                 }
             }
         }
