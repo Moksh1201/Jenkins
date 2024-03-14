@@ -69,7 +69,7 @@ pipeline {
         stage('Integration Testing') {
             steps {
                 echo "Executing Integration Tests with Apache Camel"
-                echo "Updating code base"
+                echo "Update code base"
             }
         }
         stage('Deploy to Production Environment') {
