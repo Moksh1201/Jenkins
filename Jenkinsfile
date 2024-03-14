@@ -2,73 +2,77 @@ pipeline {
     agent any
 
     environment {
-        DIRECTORY_PATH = "https://github.com/Moksh1201/Jenkins"
+        REPOSITORY_URL = "https://github.com/Moksh1201/Jenkins"
         TESTING_ENVIRONMENT = "staging"
         PRODUCTION_ENVIRONMENT = "Moksh"
     }
 
     stages {
-        stage('Build') {
+        stage('Retrieve Code') {
             steps {
-                echo "Fetching the source code from ${env.DIRECTORY_PATH}"
-                echo "Building the code using Maven"
+                echo "Retrieving code from ${env.REPOSITORY_URL}"
             }
         }
-        stage('Unit and integration tests') {
+        stage('Compile and Build') {
             steps {
-                echo "Running unit and integration tests using JUnit"
+                echo "Building the project using Maven"
+            }
+        }
+        stage('Execute Tests') {
+            steps {
+                echo "Running unit and integration tests with JUnit"
             }
             post {
                 success {
-                    emailext  subject: 'Success: Testing Stage', 
-                               body: 'Tests ran successfully', 
+                    emailext  subject: 'Test Outcome: Success', 
+                               body: 'All tests passed without issues.', 
                                to: "mokshmadaan27@gmail.com",
                                attachLog: true
                 }
                 failure {
-                    emailext  subject: 'Failure: Testing Stage', 
-                               body: 'Failed to run tests', 
+                    emailext  subject: 'Test Outcome: Failure', 
+                               body: 'Some tests failed during execution.', 
                                to: "mokshmadaan27@gmail.com",
                                attachLog: true
                 }
             }
         }
-        stage('Code Analysis') {
+        stage('Quality Check') {
             steps {
-                echo "Checking the quality of the code using SonarQube"
+                echo "Conducting code quality assessment via SonarQube"
             }
         }
-        stage('Security Scan') {
+        stage('Security Inspection') {
             steps {
-                echo "Performing Security Scan using Synk"
+                echo "Performing security analysis utilizing Synk"
             }
             post {
                 success {
-                    emailext  subject: 'Success: Security Scan', 
-                               body: 'Security scan was successful', 
+                    emailext  subject: 'Security Review: Passed', 
+                               body: 'No security threats were identified.', 
                                to: "mokshmadaan27@gmail.com",
                                attachLog: true
                 }
                 failure {
-                    emailext  subject: 'Failure: Security Scan', 
-                               body: 'Failed while scanning for security vulnerabilities', 
+                    emailext  subject: 'Security Review: Failed', 
+                               body: 'Security vulnerabilities detected.', 
                                to: "mokshmadaan27@gmail.com",
                                attachLog: true
                 }
             }
         }
-        stage('Deploy to Staging') {
+        stage('Deploy to Staging Environment') {
             steps {
-                echo "Deploying to Staging Server (AWS EC2)"
+                echo "Deploying to Staging Environment (AWS EC2)"
             }
         }
-        stage('Integration tests on Staging') {
+        stage('Integration Testing') {
             steps {
-                echo "Running Integration Tests using Apache Camel tool"
-                echo "Updating code"
+                echo "Executing Integration Tests with Apache Camel"
+                echo "Updating code base"
             }
         }
-        stage('Deploy to Production') {
+        stage('Deploy to Production Environment') {
             steps {
                 echo "Deploying to production environment: ${env.PRODUCTION_ENVIRONMENT}"
             }
@@ -77,15 +81,15 @@ pipeline {
 
     post {
         success {
-            emailext subject: "Pipeline '${currentBuild.fullDisplayName}' Successful",
-                      body: 'The build was successful. Congratulations!',
+            emailext subject: "Pipeline '${currentBuild.fullDisplayName}' Succeeded",
+                      body: 'The build completed successfully. Well done!',
                       to: 'mokshmadaan27@gmail.com',
                       attachLog: true
         }
           
         failure {
             emailext subject: "Pipeline '${currentBuild.fullDisplayName}' Failed",
-                      body: 'The build has failed. Please investigate.',
+                      body: 'The build encountered errors. Please investigate.',
                       to: 'mokshmadaan27@gmail.com',
                       attachLog: true
         }
