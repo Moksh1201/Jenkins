@@ -12,7 +12,7 @@ pipeline {
             steps {
                 echo 'Dependency installation...'
                 echo 'Building the application...'
-                git branch: 'main', url: 'https://github.com/Moksh1201/HTML/tree/main/10.1p'
+                git branch: 'main', url: 'https://github.com/Moksh1201/HTML/tree/5c7db3f668a8fd48093ab25bfd6dc09407228bcf/10.1p'
             }
         }
         stage('Test') {
