@@ -1,6 +1,12 @@
 pipeline {
     agent any
-    
+
+    environment {
+        DIRECTORY_PATH = "mokshm/desktop/Deakin-Unit-Page"
+        TESTING_ENVIRONMENT = "staging"
+        PRODUCTION_ENVIRONMENT = "Moksh"
+    }
+
     stages {
         stage('Build') {
             steps {
@@ -9,27 +15,27 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/mayank1818/task-10.1p.git'
             }
         }
-        stage('Testing') {
+        stage('Test') {
             steps {
-                echo 'Executing tests...'
-                
-                script {
-                    def emailScript = """
-                        \$SMTPServer = "smtp.gmail.com"
-                        \$SMTPFrom = "mokshmadaan27@gmail.com"
-                        \$SMTPTo = "mokshmadaan27@gmail.com"
-                        \$SMTPSubject = "Test succeeded."
-                        \$SMTPBody = "The test phase has passed."
-                        \$SMTPUsername = "mokshmadaan27@gmail.com"
-                        \$SMTPPassword = "vvmq fcsn vzwa hbvp"
-    
-                        Send-MailMessage -From \$SMTPFrom -To \$SMTPTo -Subject \$SMTPSubject -Body \$SMTPBody -SmtpServer \$SMTPServer -UseSsl -Port 587 -Credential (New-Object System.Management.Automation.PSCredential (\$SMTPUsername, (ConvertTo-SecureString -AsPlainText \$SMTPPassword -Force)))
-                    """
-                    powershell(emailScript)
+                echo "Running unit tests"
+                echo "Running integration tests"
+            }
+            post {
+                success {
+                    emailext  subject: 'Unit Test Status - Success', 
+                               body: 'Unit Test has been completed successfully.', 
+                               to: "mokshmadaan27@gmail.com",
+                               attachLog: true
+                }
+                failure {
+                    emailext subject: 'Unit Test Status - Failure', 
+                              body: 'Unit Test has failed.', 
+                              to: "mokshmadaan27@gmail.com",
+                              attachLog: true
                 }
             }
         }
-        stage('Code Analysis') {
+        stage('Code Quality Check') {
             steps {
                 echo 'Analyzing code quality...'
             }
@@ -54,22 +60,25 @@ pipeline {
                 }
             }
         }
-        stage('Deploy Staging') {
+        stage('Deploy') {
             steps {
-                echo 'Deploying to staging environment...'
+                echo "Deploying application to ${env.TESTING_ENVIRONMENT}"
             }
         }
-        stage('Integration Test') {
+        stage('Approval') {
             steps {
-                echo 'Performing integration tests...'
+                script {
+                    sleep 10 // Simulate manual approval for 10 seconds
+                }
             }
         }
-        stage('Deploy Production') {
+        stage('Deploy to Production') {
             steps {
-                echo 'Deploying to production environment...'
+                echo "Deploying code to production environment: "
             }
         }
     }
+
     post {
         success {
             emailext subject: "Pipeline '${currentBuild.fullDisplayName}' Successful",
