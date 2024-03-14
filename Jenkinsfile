@@ -10,7 +10,7 @@ ppipeline {
   stages {
      stage('Build') {
         steps {
-           echo "Fetching source code from ${env.DIRECTORY_PATH}"
+           echo "Fetching source code from "
            echo "Compiling the code and generating artifacts"
         }
      }
