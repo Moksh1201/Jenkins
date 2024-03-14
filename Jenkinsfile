@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DIRECTORY_PATH = "mokshm/desktop/Deakin-Unit-Page"
+        DIRECTORY_PATH = "https://github.com/Moksh1201/Jenkins"
         TESTING_ENVIRONMENT = "staging"
         PRODUCTION_ENVIRONMENT = "Moksh"
     }
@@ -10,71 +10,67 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Dependency installation...'
-                echo 'Building the application...'
-                git branch: 'main', url: 'https://github.com/Moksh1201/HTML/tree/5c7db3f668a8fd48093ab25bfd6dc09407228bcf/10.1p'
+                echo "Fetching the source code from ${env.DIRECTORY_PATH}"
+                echo "Building the code using Maven"
             }
         }
-        stage('Test') {
+        stage('Unit and integration tests') {
             steps {
-                echo "Running unit tests"
-                echo "Running integration tests"
+                echo "Running unit and integration tests using JUnit"
             }
             post {
                 success {
-                    emailext  subject: 'Unit Test Status - Success', 
-                               body: 'Unit Test has been completed successfully.', 
+                    emailext  subject: 'Success: Testing Stage', 
+                               body: 'Tests ran successfully', 
                                to: "mokshmadaan27@gmail.com",
                                attachLog: true
                 }
                 failure {
-                    emailext subject: 'Unit Test Status - Failure', 
-                              body: 'Unit Test has failed.', 
-                              to: "mokshmadaan27@gmail.com",
-                              attachLog: true
+                    emailext  subject: 'Failure: Testing Stage', 
+                               body: 'Failed to run tests', 
+                               to: "mokshmadaan27@gmail.com",
+                               attachLog: true
                 }
             }
         }
-        stage('Code Quality Check') {
+        stage('Code Analysis') {
             steps {
-                echo 'Analyzing code quality...'
+                echo "Checking the quality of the code using SonarQube"
             }
         }
-        stage('Security') {
+        stage('Security Scan') {
             steps {
-                echo 'Conducting security scans...'
-                
-                script {
-                    def emailScript = """
-                        \$SMTPServer = "smtp.gmail.com"
-                        \$SMTPFrom = "mokshmadaan27@gmail.com"
-                        \$SMTPTo = "mokshmadaan27@gmail.com"
-                        \$SMTPSubject = "Security checks passed."
-                        \$SMTPBody = "The pipeline has successfully cleared security checks."
-                        \$SMTPUsername = "mokshmadaan27@gmail.com"
-                        \$SMTPPassword = "vvmq fcsn vzwa hbvp"
-    
-                        Send-MailMessage -From \$SMTPFrom -To \$SMTPTo -Subject \$SMTPSubject -Body \$SMTPBody -SmtpServer \$SMTPServer -UseSsl -Port 587 -Credential (New-Object System.Management.Automation.PSCredential (\$SMTPUsername, (ConvertTo-SecureString -AsPlainText \$SMTPPassword -Force)))
-                    """
-                    powershell(emailScript)
+                echo "Performing Security Scan using Synk"
+            }
+            post {
+                success {
+                    emailext  subject: 'Success: Security Scan', 
+                               body: 'Security scan was successful', 
+                               to: "mokshmadaan27@gmail.com",
+                               attachLog: true
+                }
+                failure {
+                    emailext  subject: 'Failure: Security Scan', 
+                               body: 'Failed while scanning for security vulnerabilities', 
+                               to: "mokshmadaan27@gmail.com",
+                               attachLog: true
                 }
             }
         }
-        stage('Deploy') {
+        stage('Deploy to Staging') {
             steps {
-                echo "Deploying application to ${env.TESTING_ENVIRONMENT}"
+                echo "Deploying to Staging Server (AWS EC2)"
             }
         }
-        stage('Approval') {
+        stage('Integration tests on Staging') {
             steps {
-                script {
-                    sleep 10 
-                }
+                echo "Running Integration Tests using Apache Camel tool"
+                echo "Updating code"
             }
         }
         stage('Deploy to Production') {
             steps {
-                echo "Deploying code to production environment: "
+                echo "Deploying to production environment: ${env.PRODUCTION_ENVIRONMENT}"
             }
         }
     }
