@@ -54,7 +54,7 @@ ppipeline {
      }
      stage('Deploy to Production') {
         steps {
-           echo "Deploying code to production environment: ${env.PRODUCTION_ENVIRONMENT}"
+           echo "Deploying code to production environment: "
         }
      }
   }
