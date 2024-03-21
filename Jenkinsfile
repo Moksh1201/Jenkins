@@ -59,7 +59,7 @@ pipeline {
         }
         stage('Deploy to Staging Environment') {
             steps {
-                echo "Deploying to Staging Environment (AWS EC2)"
+                echo "Deploying to Staging Environment AWS EC2"
             }
         }
         stage('Integration Testing') {
