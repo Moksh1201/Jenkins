@@ -64,7 +64,7 @@ pipeline {
         }
         stage('Integration Testing') {
             steps {
-                echo "Executing Integration Tests with Apache Camel"
+                echo "Executing Integration Tests with TestComplete Support"
                 echo "Update code base"
             }
         }
