@@ -26,13 +26,13 @@ pipeline {
                 success {
                     emailext  subject: 'Test Outcome: Success', 
                                body: 'All tests passed without issues.', 
-                               to: "moksh4814.be22@chitkara.edu.in",
+                               to: "moksh4814.be22@chitkara.edu.in","mokshmadaan27@gmail.com",
                                attachLog: true
                 }
                 failure {
                     emailext  subject: 'Test Outcome: Failure', 
                                body: 'Some tests failed during execution.', 
-                               to: "moksh4814.be22@chitkara.edu.in",
+                               to: "moksh4814.be22@chitkara.edu.in","mokshmadaan27@gmail.com",
                                attachLog: true
                 }
             }
@@ -46,13 +46,13 @@ pipeline {
                 success {
                     emailext  subject: 'Security Review: Passed', 
                                body: 'No security threats were identified.', 
-                               to: "moksh4814.be22@chitkara.edu.in",
+                               to: "moksh4814.be22@chitkara.edu.in","mokshmadaan27@gmail.com",
                                attachLog: true
                 }
                 failure {
                     emailext  subject: 'Security Review: Failed', 
                                body: 'Security vulnerabilities detected.', 
-                               to: "moksh4814.be22@chitkara.edu.in",
+                               to: "moksh4814.be22@chitkara.edu.in","mokshmadaan27@gmail.com",
                                attachLog: true
                 }
             }
@@ -79,14 +79,14 @@ pipeline {
         success {
             emailext subject: "Pipeline '${currentBuild.fullDisplayName}' Succeeded",
                       body: 'The build completed successfully. Well done!',
-                      to: 'moksh4814.be22@chitkara.edu.in',
+                      to: 'moksh4814.be22@chitkara.edu.in',"mokshmadaan27@gmail.com",
                       attachLog: true
         }
           
         failure {
             emailext subject: "Pipeline '${currentBuild.fullDisplayName}' Failed",
                       body: 'The build encountered errors. Please investigate.',
-                      to: 'moksh4814.be22@chitkara.edu.in',
+                      to: 'moksh4814.be22@chitkara.edu.in',"mokshmadaan27@gmail.com",
                       attachLog: true
         }
     }
