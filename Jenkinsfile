@@ -4,7 +4,7 @@ pipeline {
     environment {
         REPOSITORY_URL = "https://github.com/Moksh1201/Jenkins"
         TESTING_ENVIRONMENT = "staging"
-        PRODUCTION_ENVIRONMENT = "Moksh"
+        PRODUCTION_ENVIRONMENT = "AWS EC2"
     }
 
     stages {
@@ -40,7 +40,7 @@ pipeline {
 
         stage('Security Inspection') {
             steps {
-                echo "Performing security analysis utilizing Synk"
+                echo "Performing security analysis utilizing Synopsys Security Scan"
             }
             post {
                 success {
