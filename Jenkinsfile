@@ -18,7 +18,7 @@ pipeline {
                 echo "Building the project using Maven"
             }
         }
-        stage('Execute Tests') {
+        stage('Code Analysis') {
             steps {
                 echo "Running unit and integration tests with JUnit"
             }
@@ -37,11 +37,7 @@ pipeline {
                 }
             }
         }
-        stage('Quality Check') {
-            steps {
-                echo "Conducting code quality assessment via SonarQube"
-            }
-        }
+
         stage('Security Inspection') {
             steps {
                 echo "Performing security analysis utilizing Synk"
