@@ -27,7 +27,6 @@ pipeline {
                     emailext  subject: 'Test Outcome: Success', 
                                body: 'All tests passed without issues.', 
                                to: "moksh4814.be22@chitkara.edu.in",
-                               to: "mokshmadaan27@gmail.com",
                                attachLog: true
                 }
                 
