@@ -20,7 +20,7 @@ pipeline {
         }
         stage('Code Analysis') {
             steps {
-                echo "Running unit and integration tests with JUnit"
+                echo "Run unit and integration tests with JUnit"
             }
             post {
                 success {
